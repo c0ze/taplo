@@ -12,7 +12,7 @@
   "bugs": {
     "url": "https://github.com/tamasfe/taplo/issues"
   },
-  "publisher": "tamasfe",
+  "publisher": "arda",
   "author": {
     "name": "tamasfe"
   },
@@ -397,13 +397,14 @@
   "main": "./dist/extension.js",
   "browser": "./dist/browser-extension.js",
   "scripts": {
-    "vscode:prepublish": "yarn build",
+    "vscode:prepublish": "npm run build",
     "open-in-browser": "vscode-test-web --extensionDevelopmentPath=. .",
     "build:syntax": "ts-node --project node.tsconfig.json src/syntax/index.ts",
     "build:browser-extension": "rollup -c rollup.config.browser-extension.mjs",
     "build:browser-server": "rollup -c rollup.config.browser-server.mjs",
     "build:node": "rollup -c rollup.config.mjs",
-    "build": "node scripts/build.mjs"
+    "build": "npm run build:syntax && npm run build:node && npm run build:browser-extension && npm run build:browser-server",
+    "package": "npm run build && node ./scripts/build-local-vsix.js"
   },
   "dependencies": {
     "@taplo/lsp": "^0.8.0",
@@ -423,6 +424,7 @@
     "@types/vscode": "^1.90.0",
     "@types/which": "^3.0.3",
     "@vscode/test-web": "^0.0.51",
+    "@vscode/vsce": "^3.7.1",
     "esbuild": "^0.20.0",
     "rollup": "^4.9.6",
     "rollup-plugin-esbuild": "^6.1.1",
